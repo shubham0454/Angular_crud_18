@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header bg-success">
+        <h6>Employee List</h6>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>sr No</th>
+                  <th>Name</th>
+                  <th>contact No</th>
+                  <th>Email-Id</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(item of employeeList; track $index){
+                  <tr>
+                    <td>{{$index+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.contactNo}}</td>
+                    <td>{{item.emailId}}</td>
+                    <td class="text-center">
+                      <button class="btn btn-primary" (click)="onEdit(item)" >Edit</button>
+                      <button class="btn btn-danger mx-2" (click)="onDelete(item.empId)">Delete</button>
+                    </td>
+                  </tr>
+                }
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+    <div class="card-header bg-success">
+      New Employee
+    </div>
+    <div class="card-body">
+      <form [formGroup]="employeeForm">
+        <div class="row">
+          <div class="col-12">
+            <label for="">Name</label>
+            <input type="text" formControlName="name" formControlName="name" class="form-control">
+            <div class="text-danger">
+              @if(employeeForm.controls['name'].touched){
+                @if(employeeForm.controls['name'].errors?.['required']){
+                  <span>Name Is required</span>
+                }
+              }
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="">Email-Id</label>
+            <input type="text" name="" formControlName="emailId" class="form-control">
+          </div>
+          <div class="col-6">
+            <label for="">Contact No</label>
+            <input type="text" name="" formControlName="contactNo" class="form-control">
+          </div>
+          <div class="col-6">
+            <label for="">city</label>
+            <input type="text" name="" formControlName="city" class="form-control">
+          </div>
+          <div class="col-6">
+            <label for="">State</label>
+            <input type="text" name="" formControlName="state" class="form-control">
+          </div>
+          <div class="col-6">
+            <label for="">Pin Code</label>
+            <input type="text" name="" formControlName="pinCode" class="form-control">
+            <div class="text-danger">
+              @if(employeeForm.controls['pinCode'].touched){
+                @if(employeeForm.controls['pinCode'].errors?.['required']){
+                  <span>Pin code Is required</span>
+                }
+                @if(employeeForm.controls['PinCode'].errors?.['minlength']){
+                  <span>min 6 char Required</span>
+                }
+              
+              }
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="">Address</label>
+           <textarea formControlName="address" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col-6 text-center">
+            <button class="btn btn-secondary" type="button"  [disabled]="employeeForm.invalid" (click)="reset()">reset</button>
+          </div>
+          <div class="col-6 text-center">
+            @if(employeeForm.controls['empId'].value == '1'){
+              <button class="btn btn-success" [disabled]="employeeForm.invalid" (click)="onSave()"  >save Employee</button>
+            }@else {
+              <button class="btn btn-warning" [disabled]="employeeForm.invalid"  (click)="onUpdate()" >update Employee</button>
+            }
+           
+           
+          </div>
+        </div>
+      </form>
+   
+    </div>
+  </div>
+  </div>
+</div>
